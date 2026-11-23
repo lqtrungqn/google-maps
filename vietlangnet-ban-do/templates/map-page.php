@@ -23,6 +23,8 @@ $vln_ver      = VLN_MAP_VERSION;
 <?php endif; ?>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="<?php echo esc_url( VLN_MAP_URL . 'assets/vendor/leaflet.css?ver=1.9.4' ); ?>">
+<link rel="stylesheet" href="<?php echo esc_url( VLN_MAP_URL . 'assets/vendor/markercluster.css?ver=1.5.3' ); ?>">
 <link rel="stylesheet" href="<?php echo esc_url( VLN_MAP_URL . 'assets/map.css?ver=' . $vln_ver ); ?>">
 </head>
 <body class="vln-body">
@@ -61,7 +63,8 @@ $vln_ver      = VLN_MAP_VERSION;
 	<?php echo vln_map_render_main( false ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
 </div>
 <script>window.VLN_MAP = <?php echo wp_json_encode( vln_map_js_config() ); ?>;</script>
-<script src="<?php echo esc_url( VLN_MAP_URL . 'assets/markerclusterer.min.js?ver=2.5.3' ); ?>"></script>
+<script src="<?php echo esc_url( VLN_MAP_URL . 'assets/vendor/leaflet.js?ver=1.9.4' ); ?>"></script>
+<script src="<?php echo esc_url( VLN_MAP_URL . 'assets/vendor/leaflet.markercluster.js?ver=1.5.3' ); ?>"></script>
 <script src="<?php echo esc_url( VLN_MAP_URL . 'assets/map.js?ver=' . $vln_ver ); ?>"></script>
 </body>
 </html>

@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: VIETLANGNET – Bản đồ lớp học
- * Description: Quản lý và hiển thị bản đồ lớp học tiếng Việt toàn cầu trên Google Maps. Thêm mục "Bản đồ lớp học" trong trang quản trị, trang bản đồ toàn màn hình và shortcode [vln_ban_do].
- * Version: 1.0.0
+ * Description: Quản lý và hiển thị bản đồ lớp học tiếng Việt toàn cầu trên bản đồ (Leaflet + CARTO / OpenStreetMap). Thêm mục "Bản đồ lớp học" trong trang quản trị, trang bản đồ toàn màn hình và shortcode [vln_ban_do].
+ * Version: 1.1.0
  * Requires at least: 6.0
  * Requires PHP: 7.4
  * Text Domain: vietlangnet-ban-do
@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'VLN_MAP_VERSION', '1.0.0' );
+define( 'VLN_MAP_VERSION', '1.1.0' );
 define( 'VLN_MAP_FILE', __FILE__ );
 define( 'VLN_MAP_DIR', plugin_dir_path( __FILE__ ) );
 define( 'VLN_MAP_URL', plugin_dir_url( __FILE__ ) );

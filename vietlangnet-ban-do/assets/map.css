@@ -94,9 +94,31 @@ body.vln-body { margin: 0; background: #fbfcfd; }
 .vln-tag { justify-self: start; display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; padding: 2px 8px; border-radius: 6px; background: #e0f2fe; color: #075985; margin-top: 3px; }
 .vln-empty { padding: 24px 12px; color: var(--vln-muted); }
 
-.vln-map { min-height: 0; background: var(--vln-ocean); }
-.vln-map .gm-style { font-family: var(--vln-font) !important; }
-.vln-map .gm-style .gm-style-iw-c { border-radius: 16px !important; box-shadow: 0 12px 32px rgba(11,37,69,.22) !important; }
+.vln-map { min-height: 0; height: 100%; background: var(--vln-ocean); z-index: 0; }
+.vln-app .leaflet-container { font-family: var(--vln-font); background: var(--vln-ocean); }
+.vln-app .leaflet-control-attribution { font-size: 10.5px; background: rgba(255,255,255,.85); }
+.vln-app .leaflet-control-attribution a { color: var(--vln-blue); }
+.vln-app .leaflet-bar a { color: var(--vln-navy); }
+.vln-app .leaflet-popup-content-wrapper { border-radius: 16px; box-shadow: 0 12px 32px rgba(11,37,69,.22); padding: 4px; }
+.vln-app .leaflet-popup-content { margin: 14px 16px; }
+.vln-app .leaflet-container a.leaflet-popup-close-button { top: 6px; right: 6px; width: 28px; height: 28px; font-size: 22px; color: var(--vln-muted); }
+
+/* Ghim lớp học: navy + sách vàng; ghim đang chọn: vàng + sách navy */
+.vln-marker { background: none; border: 0; }
+.vln-marker-svg { width: 100%; height: 100%; display: block; filter: drop-shadow(0 2px 3px rgba(11,37,69,.35)); transition: transform .15s; transform-origin: 50% 100%; }
+.vln-marker:hover .vln-marker-svg { transform: scale(1.12); }
+.vln-marker-bg { fill: var(--vln-navy); }
+.vln-marker-fg { fill: var(--vln-gold); }
+.vln-marker.is-active .vln-marker-bg { fill: var(--vln-gold); }
+.vln-marker.is-active .vln-marker-fg { fill: var(--vln-navy); }
+
+/* Cụm điểm */
+.vln-cluster { background: rgba(224,159,62,.35); border-radius: 50%; display: grid; place-items: center; }
+.vln-cluster span {
+  width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--vln-navy); color: #fff; border: 2.5px solid var(--vln-gold);
+  font: 800 13px/1 var(--vln-font); font-variant-numeric: tabular-nums;
+}
 
 /* Khung thông tin lớp */
 .vln-pop { width: 280px; max-width: 70vw; color: var(--vln-fg); font-family: var(--vln-font); padding: 0 2px 4px; }

@@ -65,7 +65,7 @@ add_filter(
 /** Cấu hình truyền cho map.js */
 function vln_map_js_config() {
 	return array(
-		'apiKey'  => vln_map_setting( 'api_key' ),
+		'tiles'   => vln_map_tile_config(),
 		'regions' => vln_map_regions(),
 		'classes' => vln_map_all_classes(),
 	);
@@ -103,6 +103,14 @@ function vln_map_render_filters() {
 		. '<select data-vln="country" aria-label="Lọc theo quốc gia"><option value="">Tất cả quốc gia</option></select>';
 }
 
+/** Đăng ký Leaflet và MarkerCluster (đóng gói sẵn trong plugin, không tải từ CDN). */
+function vln_map_register_vendor() {
+	wp_register_style( 'vln-leaflet', VLN_MAP_URL . 'assets/vendor/leaflet.css', array(), '1.9.4' );
+	wp_register_style( 'vln-markercluster', VLN_MAP_URL . 'assets/vendor/markercluster.css', array( 'vln-leaflet' ), '1.5.3' );
+	wp_register_script( 'vln-leaflet', VLN_MAP_URL . 'assets/vendor/leaflet.js', array(), '1.9.4', true );
+	wp_register_script( 'vln-markercluster', VLN_MAP_URL . 'assets/vendor/leaflet.markercluster.js', array( 'vln-leaflet' ), '1.5.3', true );
+}
+
 /* ---------- Shortcode [vln_ban_do] ---------- */
 
 add_shortcode(
@@ -116,9 +124,9 @@ add_shortcode(
 		$atts   = shortcode_atts( array( 'height' => 620 ), $atts, 'vln_ban_do' );
 		$height = max( 360, min( 1200, absint( $atts['height'] ) ) );
 
-		wp_enqueue_style( 'vln-map', VLN_MAP_URL . 'assets/map.css', array(), VLN_MAP_VERSION );
-		wp_enqueue_script( 'vln-markerclusterer', VLN_MAP_URL . 'assets/markerclusterer.min.js', array(), '2.5.3', true );
-		wp_enqueue_script( 'vln-map', VLN_MAP_URL . 'assets/map.js', array( 'vln-markerclusterer' ), VLN_MAP_VERSION, true );
+		vln_map_register_vendor();
+		wp_enqueue_style( 'vln-map', VLN_MAP_URL . 'assets/map.css', array( 'vln-leaflet', 'vln-markercluster' ), VLN_MAP_VERSION );
+		wp_enqueue_script( 'vln-map', VLN_MAP_URL . 'assets/map.js', array( 'vln-leaflet', 'vln-markercluster' ), VLN_MAP_VERSION, true );
 		wp_add_inline_script( 'vln-map', 'window.VLN_MAP = ' . wp_json_encode( vln_map_js_config() ) . ';', 'before' );
 
 		return '<div class="vln-app vln-app--embed" style="height:' . $height . 'px">' . vln_map_render_main( true ) . '</div>';

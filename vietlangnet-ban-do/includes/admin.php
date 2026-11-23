@@ -100,14 +100,10 @@ function vln_map_box_info( $post ) {
 
 function vln_map_box_location( $post ) {
 	$id  = $post->ID;
-	$key = vln_map_setting( 'api_key' );
 	echo '<p class="vln-field"><label for="vln_address">Địa chỉ</label></p>';
 	echo '<div class="vln-geo"><input type="text" id="vln_address" name="vln[address]" class="widefat" value="' . esc_attr( vln_map_get( $id, 'address' ) ) . '" placeholder="Số nhà, đường, thành phố, quốc gia">';
 	echo '<button type="button" class="button button-primary" id="vln_geocode">Tìm vị trí</button></div>';
 	echo '<p class="description" id="vln_geo_msg">Nhập địa chỉ rồi bấm "Tìm vị trí". Có thể bấm lên bản đồ hoặc kéo ghim để chỉnh vị trí chính xác.</p>';
-	if ( ! $key ) {
-		echo '<p class="vln-warn">Chưa có Google Maps API key. Bản đồ vẫn hiện để thử nhưng có chữ "For development purposes only" và nút "Tìm vị trí" có thể không chạy. Thêm key ở <a href="' . esc_url( admin_url( 'edit.php?post_type=vln_lop_hoc&page=vln-settings' ) ) . '">Bản đồ lớp học → Cài đặt</a>.</p>';
-	}
 	echo '<div id="vln_picker" class="vln-picker" aria-label="Bản đồ chọn vị trí"></div>';
 	echo '<div class="vln-grid vln-grid--2">';
 	vln_map_input( $id, 'lat', 'Vĩ độ (latitude)', array( 'placeholder' => '33.5902' ) );
@@ -190,14 +186,10 @@ add_action(
 		}
 		wp_enqueue_style( 'vln-admin', VLN_MAP_URL . 'assets/admin.css', array(), VLN_MAP_VERSION );
 		if ( in_array( $hook, array( 'post.php', 'post-new.php' ), true ) ) {
-			wp_enqueue_script( 'vln-admin', VLN_MAP_URL . 'assets/admin.js', array(), VLN_MAP_VERSION, true );
-			wp_localize_script(
-				'vln-admin',
-				'VLN_ADMIN',
-				array(
-					'apiKey' => vln_map_setting( 'api_key' ),
-				)
-			);
+			vln_map_register_vendor();
+			wp_enqueue_style( 'vln-leaflet' );
+			wp_enqueue_script( 'vln-admin', VLN_MAP_URL . 'assets/admin.js', array( 'vln-leaflet' ), VLN_MAP_VERSION, true );
+			wp_add_inline_script( 'vln-admin', 'window.VLN_ADMIN = ' . wp_json_encode( array( 'tiles' => vln_map_tile_config() ) ) . ';', 'before' );
 		}
 	}
 );

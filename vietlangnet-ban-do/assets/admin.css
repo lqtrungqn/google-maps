@@ -17,3 +17,6 @@
 .vln-badge--missing { background: #fcf0f1; color: #b32d2e; }
 .column-vln_location, .column-vln_visible { width: 120px; }
 .column-vln_region { width: 130px; }
+.vln-picker { position: relative; z-index: 0; }
+.vln-admin-marker { background: none; border: 0; }
+.vln-admin-marker svg { display: block; filter: drop-shadow(0 2px 3px rgba(11,37,69,.35)); }
