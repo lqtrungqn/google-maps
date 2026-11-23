@@ -7,39 +7,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-/** Các kiểu bản đồ nền. key => nhãn. */
-function vln_map_basemaps() {
-	return array(
-		'voyager'   => 'CARTO Voyager – sáng, màu nhẹ (khuyên dùng)',
-		'light_all' => 'CARTO Positron – xám trắng, tối giản',
-		'osm'       => 'OpenStreetMap – không cần key, nhiều màu hơn',
-	);
-}
-
-/**
- * Cấu hình ô bản đồ (tile) cho Leaflet. Không có key CARTO thì tự dùng OpenStreetMap.
- */
-function vln_map_tile_config() {
-	$key   = vln_map_setting( 'carto_key' );
-	$style = vln_map_setting( 'basemap' );
-	if ( 'osm' === $style || ! $key || ! array_key_exists( $style, vln_map_basemaps() ) ) {
-		return array(
-			'url'         => 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-			'attribution' => '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>',
-			'maxZoom'     => 19,
-		);
-	}
-	return array(
-		'url'         => 'https://basemaps.cartocdn.com/rastertiles/' . $style . '/{z}/{x}/{y}.png?key=' . rawurlencode( $key ),
-		'attribution' => '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions" target="_blank" rel="noopener">CARTO</a>',
-		'maxZoom'     => 20,
-	);
-}
-
 function vln_map_defaults() {
 	return array(
-		'carto_key' => '',
-		'basemap'   => 'voyager',
+		'api_key'   => '',
 		'slug'      => 'ban-do-lop-hoc',
 		'logo'      => '',
 		'title'     => 'Bản đồ lớp học tiếng Việt toàn cầu',
@@ -83,9 +53,7 @@ add_action(
 				'sanitize_callback' => function ( $in ) {
 					$in  = (array) $in;
 					$out = vln_map_defaults();
-					$out['carto_key'] = isset( $in['carto_key'] ) ? sanitize_text_field( $in['carto_key'] ) : '';
-					$basemap          = isset( $in['basemap'] ) ? sanitize_key( $in['basemap'] ) : 'voyager';
-					$out['basemap']   = array_key_exists( $basemap, vln_map_basemaps() ) ? $basemap : 'voyager';
+					$out['api_key']  = isset( $in['api_key'] ) ? sanitize_text_field( $in['api_key'] ) : '';
 					$slug            = isset( $in['slug'] ) ? sanitize_title( $in['slug'] ) : '';
 					$out['slug']     = $slug ? $slug : 'ban-do-lop-hoc';
 					$out['logo']     = isset( $in['logo'] ) ? esc_url_raw( $in['logo'] ) : '';
@@ -108,24 +76,10 @@ function vln_map_settings_page() {
 			<?php settings_fields( 'vln_map' ); ?>
 			<table class="form-table" role="presentation">
 				<tr>
-					<th scope="row"><label for="vln_basemap">Kiểu bản đồ nền</label></th>
+					<th scope="row"><label for="vln_api_key">Google Maps API key</label></th>
 					<td>
-						<select id="vln_basemap" name="vln_map_settings[basemap]">
-							<?php foreach ( vln_map_basemaps() as $k => $label ) : ?>
-								<option value="<?php echo esc_attr( $k ); ?>" <?php selected( $o['basemap'], $k ); ?>><?php echo esc_html( $label ); ?></option>
-							<?php endforeach; ?>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<th scope="row"><label for="vln_carto_key">CARTO API key</label></th>
-					<td>
-						<input type="text" id="vln_carto_key" name="vln_map_settings[carto_key]" value="<?php echo esc_attr( $o['carto_key'] ); ?>" class="regular-text code" autocomplete="off">
-						<p class="description">Key miễn phí, không cần thẻ: <a href="https://carto.com/basemaps/apikey/" target="_blank" rel="noopener">carto.com/basemaps/apikey</a>. Key chỉ chạy trên tên miền đã khai báo khi tạo key (CARTO bắt buộc tạo key riêng cho <code>localhost</code>).
-						<?php if ( ! $o['carto_key'] && 'osm' !== $o['basemap'] ) : ?>
-							<br><strong>Chưa có key nên bản đồ đang tạm dùng nền OpenStreetMap.</strong>
-						<?php endif; ?>
-						</p>
+						<input type="text" id="vln_api_key" name="vln_map_settings[api_key]" value="<?php echo esc_attr( $o['api_key'] ); ?>" class="regular-text code" autocomplete="off">
+						<p class="description">Tạo trong Google Cloud Console, bật <strong>Maps JavaScript API</strong> và <strong>Geocoding API</strong>. Nên giới hạn key theo tên miền của site (HTTP referrers).</p>
 					</td>
 				</tr>
 				<tr>
