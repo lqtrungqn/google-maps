@@ -1,0 +1,19 @@
+/* Trang quản trị bản đồ lớp học */
+.vln-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 20px; }
+@media (max-width: 782px) { .vln-grid { grid-template-columns: 1fr; } }
+.vln-field { margin: 0 0 14px; }
+.vln-field > label, .vln-field legend { display: block; font-weight: 600; margin-bottom: 6px; color: #1d2327; }
+.vln-field .description { display: block; margin-top: 4px; }
+.vln-ages { border: 0; padding: 0; }
+.vln-ages label { display: inline-flex; align-items: center; gap: 4px; margin: 0 18px 6px 0; }
+.vln-geo { display: flex; gap: 8px; align-items: stretch; }
+.vln-geo .button { white-space: nowrap; }
+.vln-picker { height: 380px; margin: 12px 0 16px; border-radius: 8px; border: 1px solid #dcdcde; background: #e8edf2; }
+.vln-msg--ok { color: #00701a; }
+.vln-msg--error { color: #b32d2e; }
+.vln-warn { background: #fcf9e8; border-left: 4px solid #dba617; padding: 8px 12px; margin: 8px 0; }
+.vln-badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 12px; background: #f0f0f1; color: #50575e; }
+.vln-badge--ok { background: #e7f5ea; color: #00701a; }
+.vln-badge--missing { background: #fcf0f1; color: #b32d2e; }
+.column-vln_location, .column-vln_visible { width: 120px; }
+.column-vln_region { width: 130px; }

@@ -1,6 +1,5 @@
-# Bản đồ lớp học (demo)
+# Bản đồ lớp học tiếng Việt toàn cầu (VIETLANGNET)
 
-Bản demo hiển thị 100 lớp học (dữ liệu mẫu) trên Google Maps. Bấm vào chấm đỏ để xem tên lớp, số điện thoại, địa chỉ…
-
-- Mở `index.html` bằng trình duyệt, hoặc xem qua GitHub Pages.
-- Dán Google Maps API key vào dòng `const GOOGLE_MAPS_API_KEY = "";` trong `index.html` để bỏ chữ "For development purposes only".
+- `index.html`: bản demo tĩnh (GitHub Pages): https://lqtrungqn.github.io/google-maps/
+- `vietlangnet-ban-do/`: plugin WordPress. Hướng dẫn cài đặt: [vietlangnet-ban-do/HUONG-DAN.md](vietlangnet-ban-do/HUONG-DAN.md)
+- `vietlangnet-ban-do.zip`: file plugin để tải lên WordPress (Plugins → Add New → Upload Plugin).

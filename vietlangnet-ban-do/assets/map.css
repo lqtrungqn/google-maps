@@ -1,0 +1,146 @@
+/* VIETLANGNET – Bản đồ lớp học. Màu theo theme VIETLANGNET. Mọi style nằm trong .vln-app để không ảnh hưởng theme. */
+.vln-app {
+  --vln-navy: #0b2545;
+  --vln-deep: #133e6f;
+  --vln-blue: #195bb0;
+  --vln-gold: #e09f3e;
+  --vln-gold-soft: #f9f3e8;
+  --vln-bg: #fbfcfd;
+  --vln-surface: #ffffff;
+  --vln-fg: #1e293b;
+  --vln-muted: #64748b;
+  --vln-line: #e2e8f0;
+  --vln-chip: #f1f5f9;
+  --vln-ocean: #dbe4ee;
+  --vln-font: "Be Vietnam Pro", "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-family: var(--vln-font); font-size: 14px; color: var(--vln-fg); background: var(--vln-bg);
+  color-scheme: light; -webkit-font-smoothing: antialiased; box-sizing: border-box;
+  display: grid; grid-template-rows: auto auto 1fr; min-height: 0; text-align: left;
+}
+.vln-app *, .vln-app *::before, .vln-app *::after { box-sizing: border-box; }
+.vln-app button, .vln-app input, .vln-app select { font-family: var(--vln-font); }
+
+/* Trang toàn màn hình */
+html:has(body.vln-body), body.vln-body { height: 100%; }
+body.vln-body { margin: 0; background: #fbfcfd; }
+.vln-app--full { height: 100%; padding-top: env(safe-area-inset-top, 0px); }
+.vln-app--full > * { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.vln-app--full > .vln-main { padding: 0; }
+
+/* Nhúng bằng shortcode */
+.vln-app--embed { grid-template-rows: 1fr; border: 1px solid var(--vln-line); border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(11,37,69,.08); }
+
+/* Thanh trên cùng – giống thanh "Tin mới" của site */
+.vln-utility { background: var(--vln-navy); color: #cbd5e1; font-size: 12px; padding-block: 8px; border-bottom: 1px solid rgba(255,255,255,.1); }
+.vln-utility .vln-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.vln-utility a { color: #cbd5e1; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
+.vln-utility a:hover { color: var(--vln-gold); }
+.vln-utility svg { width: 12px; height: 12px; fill: currentColor; }
+
+/* Header trắng với logo */
+.vln-header { background: #fff; border-bottom: 1px solid #f1f5f9; box-shadow: 0 1px 2px rgba(15,23,42,.05); }
+.vln-header .vln-row { min-height: 72px; display: flex; align-items: center; gap: 16px 24px; flex-wrap: wrap; padding-block: 10px; }
+.vln-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.vln-logo img { width: 40px; height: 40px; border-radius: 50%; object-fit: contain; box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+.vln-logo-name { display: flex; align-items: center; gap: 6px; font-size: 19px; font-weight: 800; color: var(--vln-navy); letter-spacing: -.01em; }
+.vln-logo-name i { width: 8px; height: 8px; border-radius: 50%; background: var(--vln-gold); display: inline-block; }
+.vln-logo-sub { display: block; font-size: 10.5px; font-weight: 600; color: var(--vln-muted); text-transform: uppercase; letter-spacing: .06em; }
+.vln-divider { width: 1px; align-self: stretch; background: var(--vln-line); margin-block: 8px; }
+.vln-title { margin-right: auto; min-width: 0; }
+.vln-title h1 { margin: 0; font-size: 17px; font-weight: 800; color: var(--vln-navy); text-transform: uppercase; text-wrap: balance; line-height: 1.3; }
+.vln-title p { margin: 2px 0 0; font-size: 12.5px; color: var(--vln-muted); }
+
+/* Tìm kiếm & lọc quốc gia */
+.vln-filters { display: flex; gap: 8px; flex-wrap: wrap; }
+.vln-filters--stack { display: grid; grid-template-columns: 1fr; }
+.vln-search { position: relative; display: block; margin: 0; }
+.vln-search svg { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 14px; height: 14px; fill: #94a3b8; pointer-events: none; }
+.vln-app .vln-filters input, .vln-app .vln-filters select {
+  font-size: 13px; color: var(--vln-fg); background: #f8fafc; border: 1px solid var(--vln-line); line-height: 1.3;
+  border-radius: 12px; padding: 10px 12px; min-width: 0; width: auto; height: auto; margin: 0; box-shadow: none;
+  transition: border-color .15s, box-shadow .15s;
+}
+.vln-app .vln-filters input { width: 240px; max-width: 100%; padding-left: 34px; }
+.vln-app .vln-filters--stack input, .vln-app .vln-filters--stack select { width: 100%; }
+.vln-app .vln-filters input:focus, .vln-app .vln-filters select:focus { outline: none; border-color: var(--vln-blue); box-shadow: 0 0 0 3px rgba(25,91,176,.15); background: #fff; }
+.vln-app button:focus-visible, .vln-item:focus-visible { outline: 2px solid var(--vln-blue); outline-offset: 2px; }
+
+/* Danh sách lớp */
+.vln-main { display: grid; grid-template-columns: 340px 1fr; min-height: 0; position: relative; }
+.vln-panel { display: flex; flex-direction: column; min-height: 0; background: var(--vln-surface); border-right: 1px solid var(--vln-line); }
+.vln-panel-head { padding: 14px 16px 12px; border-bottom: 1px solid var(--vln-line); display: grid; gap: 10px; }
+.vln-count { font-size: 12px; color: var(--vln-muted); font-variant-numeric: tabular-nums; }
+.vln-count b { color: var(--vln-navy); font-weight: 800; font-size: 14px; }
+.vln-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.vln-app .vln-chip {
+  font-size: 11.5px; font-weight: 600; border: 0; cursor: pointer; border-radius: 10px; padding: 6px 11px; line-height: 1.3;
+  background: var(--vln-chip); color: #334155; transition: background .15s; margin: 0; text-transform: none; letter-spacing: 0; box-shadow: none;
+}
+.vln-app .vln-chip:hover { background: #e2e8f0; }
+.vln-app .vln-chip[aria-pressed="true"] { background: var(--vln-navy); color: #fff; box-shadow: 0 1px 2px rgba(11,37,69,.3); }
+.vln-list { overflow-y: auto; margin: 0; padding: 8px; list-style: none; display: grid; gap: 6px; align-content: start; }
+.vln-item {
+  display: grid; grid-template-columns: auto 1fr; gap: 3px 12px; padding: 12px; cursor: pointer; margin: 0;
+  border-radius: 14px; border: 1px solid transparent; transition: background .15s, border-color .15s;
+}
+.vln-item:hover { background: #f8fafc; border-color: var(--vln-line); }
+.vln-item.is-active { background: var(--vln-gold-soft); border-color: rgba(224,159,62,.45); }
+.vln-item .vln-pin { grid-row: span 3; width: 30px; height: 30px; border-radius: 10px; background: var(--vln-navy); display: grid; place-items: center; margin-top: 2px; }
+.vln-item.is-active .vln-pin { background: var(--vln-gold); }
+.vln-item .vln-pin svg { width: 15px; height: 15px; fill: var(--vln-gold); }
+.vln-item.is-active .vln-pin svg { fill: var(--vln-navy); }
+.vln-item b { font-weight: 700; font-size: 13.5px; color: var(--vln-navy); line-height: 1.35; }
+.vln-item .vln-meta { color: var(--vln-muted); font-size: 12px; }
+.vln-tag { justify-self: start; display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; padding: 2px 8px; border-radius: 6px; background: #e0f2fe; color: #075985; margin-top: 3px; }
+.vln-empty { padding: 24px 12px; color: var(--vln-muted); }
+
+.vln-map { min-height: 0; background: var(--vln-ocean); }
+.vln-map .gm-style { font-family: var(--vln-font) !important; }
+.vln-map .gm-style .gm-style-iw-c { border-radius: 16px !important; box-shadow: 0 12px 32px rgba(11,37,69,.22) !important; }
+
+/* Khung thông tin lớp */
+.vln-pop { width: 280px; max-width: 70vw; color: var(--vln-fg); font-family: var(--vln-font); padding: 0 2px 4px; }
+.vln-pop .vln-tag { margin: 0; }
+.vln-pop h3 { margin: 8px 0 4px; font-size: 15.5px; font-weight: 800; line-height: 1.35; color: var(--vln-navy); text-wrap: balance; }
+.vln-pop .vln-where { margin: 0 0 12px; font-size: 12px; color: var(--vln-muted); }
+.vln-pop dl { display: grid; grid-template-columns: 82px 1fr; gap: 7px 10px; margin: 0 0 14px; font-size: 12.5px; padding-top: 12px; border-top: 1px solid var(--vln-line); }
+.vln-pop dt { color: var(--vln-muted); margin: 0; font-weight: 400; }
+.vln-pop dd { margin: 0; min-width: 0; overflow-wrap: anywhere; font-weight: 500; }
+.vln-pop dd a { color: var(--vln-blue); }
+.vln-pop .vln-inline { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.vln-pop .vln-copy { font-size: 11px; border: 1px solid var(--vln-line); background: #f8fafc; color: var(--vln-fg); border-radius: 6px; padding: 1px 7px; cursor: pointer; }
+.vln-pop .vln-actions { display: flex; gap: 8px; }
+.vln-pop .vln-btn {
+  flex: 1; text-align: center; text-decoration: none; font-weight: 700; font-size: 12.5px; padding: 10px 8px; border-radius: 12px;
+  background: var(--vln-navy); color: #fff; display: inline-flex; align-items: center; justify-content: center; gap: 6px; border: 1px solid var(--vln-navy);
+}
+.vln-pop .vln-btn:hover { background: var(--vln-deep); color: #fff; }
+.vln-pop .vln-btn--ghost { background: #fff; color: var(--vln-navy); border-color: var(--vln-gold); }
+.vln-pop .vln-btn--ghost:hover { background: var(--vln-gold-soft); color: var(--vln-navy); }
+.vln-pop .vln-btn svg { width: 12px; height: 12px; fill: var(--vln-gold); }
+
+.vln-app .vln-toggle { display: none; }
+
+@media (max-width: 900px) {
+  .vln-divider { display: none; }
+  .vln-title { flex-basis: 100%; order: 2; }
+  .vln-header .vln-filters { order: 3; flex-basis: 100%; }
+  .vln-header .vln-search { flex: 1 1 200px; }
+  .vln-app .vln-header .vln-filters input { width: 100%; }
+  .vln-app .vln-header .vln-filters select { flex: 1 1 140px; }
+}
+@media (max-width: 760px) {
+  .vln-logo-sub, .vln-title p { display: none; }
+  .vln-header .vln-row { min-height: 0; gap: 10px; }
+  .vln-main { grid-template-columns: 1fr; }
+  .vln-panel { position: absolute; inset: 0; z-index: 1000; border-right: 0; }
+  .vln-panel[data-open="false"] { display: none; }
+  .vln-app .vln-toggle {
+    display: inline-flex; align-items: center; gap: 8px; position: absolute; z-index: 1001;
+    left: max(12px, env(safe-area-inset-left, 0px)); bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+    font-weight: 700; font-size: 13px; padding: 11px 16px; border-radius: 999px; border: 0; margin: 0;
+    background: var(--vln-navy); color: #fff; box-shadow: 0 6px 18px rgba(11,37,69,.35); cursor: pointer;
+  }
+  .vln-app .vln-toggle i { width: 8px; height: 8px; border-radius: 50%; background: var(--vln-gold); }
+}
+@media (prefers-reduced-motion: reduce) { .vln-app * { transition: none !important; } }
